@@ -17,9 +17,11 @@ class UsersController < ApplicationController
   # Create action to handle user creation
   def create
     @user = User.new(user_params)
+    @user.posts_counter = 0
     if @user.save
       redirect_to @user, notice: 'User was successfully created.'
     else
+      pp @user.errors
       render 'new'
     end
   end
