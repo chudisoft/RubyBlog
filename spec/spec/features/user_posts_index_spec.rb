@@ -16,17 +16,11 @@ RSpec.describe 'User Post Index Page', type: :feature do
       expect(page).to have_content(post.text.truncate(100)) # Assuming you show a truncated body
       expect(page).to have_content("Comments: #{post.comments.count}")
       expect(page).to have_content("Likes: #{post.likes.count}")
-      # post.comments.limit(5).each do |comment|
-      #   expect(page).to have_content(comment.user.name)
-      #   expect(page).to have_content(comment.text)
-      # end
-      within("#post_#{post.id}") do # Scope to a specific post
-        post.comments.limit(5).each do |comment|
-          expect(page).to have_content(comment.user.name)
-          within(".comment_#{comment.id}") do # Use a specific class for comments
-            expect(page).to have_content(comment.text)
-          end
-        end
+      post.recent_comments.each do |comment|
+        expect(page).to have_content(comment.user.name)
+        expect(page).to have_content(comment.text)
+        unique_comment_content = "#{comment.user.name}: #{comment.text}"
+        expect(page).to have_content(unique_comment_content)
       end
     end
   end
