@@ -21,9 +21,7 @@ RSpec.describe 'User Index Page', type: :feature do
   it 'redirects to user show page on clicking a user' do
     user = User.first
     # click_on user.name
-    within(".user_#{user.id}") do # Use a specific class to scope the action
-      click_on user.name
-    end
+    first('a', text: user.name).click
     expect(current_path).to eq(user_path(user))
   end
 end
