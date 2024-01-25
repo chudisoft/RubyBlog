@@ -15,6 +15,19 @@
         <p class='col-md-12 pt-2'>
             <%= @post.text %>
         </p>
+        <div class='d-flex pt-2 justify-content-end gap-2 mb-2'>
+            <%= 
+                button_to 'Like', user_post_likes_path(@user, @post), 
+                method: :post, 
+                data: {turbo_method: :create},
+                class: 'btn btn-sm btn-primary'
+            %>
+            <%= 
+                link_to 'New Comment',
+                new_user_post_comment_path(@user, @post),
+                class: 'btn btn-sm btn-primary'
+            %>
+        </div>
     </div>
     <div class='col-md-12 card mt-2 p-2'>
         <% @post.comments.each do |comment| %>
