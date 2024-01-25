@@ -1,7 +1,7 @@
 class Like < ApplicationRecord
   belongs_to :user
   belongs_to :post
-  
+
   after_create :increment_post_likes_counter
   after_destroy :decrement_post_likes_counter
 
@@ -14,5 +14,4 @@ class Like < ApplicationRecord
   def decrement_post_likes_counter
     post.decrement!(:likes_counter)
   end
-  
 end
