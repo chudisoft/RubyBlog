@@ -22,6 +22,9 @@ Like.destroy_all
   )
 end
 
+# Resetting the Faker unique generator after creating unique titles
+Faker::Lorem.unique.clear
+
 # Create 15 random posts with 10 random comments and 5 random likes for each post
 15.times do
   post = Post.create(
@@ -29,6 +32,9 @@ end
     title: Faker::Lorem.sentence,
     text: Faker::Lorem.paragraph
   )
+
+  # Resetting the Faker unique generator after creating unique items
+  Faker::Lorem.unique.clear
 
   10.times do
     Comment.create(
