@@ -31,14 +31,11 @@
                             Likes: <span><%= post.likes_counter %></span>
                         </label>
                     </div>
-                    <div class='col-md-12 pt-2 text-end'>
-                        <a href=<%= "#{@user.id}/posts/#{post.id}/like" %>>Like</a>
-                    </div>
                 </li>
             <% end %>
         </ul>
         <div class='col-md-12 mt-2 text-center'>
-            <a href=<%= user_posts_path(@user) %> class='btn btn-primary col-md-2'>See all Posts</a>
+            <a href=<%= user_posts_path(@user) %> class='btn btn-primary col-md-2'>View all Posts</a>
         </div>
     </div>
 </div>
