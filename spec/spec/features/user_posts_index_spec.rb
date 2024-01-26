@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'User Post Index Page', type: :feature do
   let(:user) { User.first }
   before do
+    11.times { |i| Post.create(author: user, title: "Post #{i}", text: "Content of post #{i}") }
     visit user_posts_path(user)
   end
 
@@ -11,7 +12,9 @@ RSpec.describe 'User Post Index Page', type: :feature do
     expect(page).to have_content(user.name)
     expect(page).to have_content("Number of posts: #{user.posts.count}")
 
-    user.posts.each do |post|
+    visible_posts = user.posts.includes(:comments, :likes).order(created_at: :desc).paginate(page: 1, per_page: 10) # Adjust `per_page` to your pagination setting
+
+    visible_posts.each do |post|
       expect(page).to have_content(post.title)
       expect(page).to have_content(post.text.truncate(100)) # Assuming you show a truncated body
       expect(page).to have_content("Comments: #{post.comments.count}")
@@ -25,14 +28,14 @@ RSpec.describe 'User Post Index Page', type: :feature do
     end
   end
 
-  it 'redirects to a post show page when a post is clicked' do
-    post = user.posts.first
-    click_on post.title
-    expect(current_path).to eq(user_post_path(user, post))
-  end
-
   it 'shows pagination if there are more posts than fit on the view' do
     expect(page).to have_selector('.pagination')
     expect(page).to have_link('2') # Checking for a link to the second page
+  end
+
+  it 'redirects to a post show page when a post is clicked' do
+    first_post = user.posts.includes(:comments, :likes).order(created_at: :desc).first
+    find('a', text: first_post.title, match: :prefer_exact).click
+    expect(current_path).to eq(user_post_path(user, first_post))
   end
 end
