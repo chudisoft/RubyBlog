@@ -30,4 +30,9 @@ RSpec.describe 'User Post Index Page', type: :feature do
     click_on post.title
     expect(current_path).to eq(user_post_path(user, post))
   end
+
+  it 'shows pagination if there are more posts than fit on the view' do
+    expect(page).to have_selector('.pagination')
+    expect(page).to have_link('2') # Checking for a link to the second page
+  end
 end
