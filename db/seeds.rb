@@ -8,19 +8,29 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 # Clear existing data
-User.destroy_all
-Post.destroy_all
-Comment.destroy_all
 Like.destroy_all
+Comment.destroy_all
+Post.destroy_all
+User.destroy_all
 
 # Create 5 random users
 5.times do
-  User.create(
+  user = User.new(
     name: Faker::Name.name,
-    photo: Faker::Avatar.image,
-    bio: Faker::Lorem.sentence
+    photo: Faker::Avatar.image(slug: Faker::Lorem.unique.word, size: "200x200", format: "png", set: "set1"),
+    bio: Faker::Lorem.sentence,
+    email: Faker::Internet.unique.email,
+    password: '123456', # or any other default password
+    password_confirmation: '123456', # ensure this matches the password
+    confirmed_at: Time.now  # To bypass the confirmation email
   )
+
+  user.skip_confirmation! # Skip sending confirmation email
+  user.save!
 end
+
+Faker::Internet.unique.clear # Clear the Faker unique generator
+
 
 # Resetting the Faker unique generator after creating unique titles
 Faker::Lorem.unique.clear
