@@ -12,7 +12,9 @@ RSpec.describe 'User Post Index Page', type: :feature do
     expect(page).to have_content(user.name)
     expect(page).to have_content("Number of posts: #{user.posts.count}")
 
-    visible_posts = user.posts.includes(:comments, :likes).order(created_at: :desc).paginate(page: 1, per_page: 10) # Adjust `per_page` to your pagination setting
+    visible_posts = user.posts.includes(:comments,
+                                        :likes).order(created_at: :desc).paginate(page: 1,
+                                                                                  per_page: 10)
 
     visible_posts.each do |post|
       expect(page).to have_content(post.title)
