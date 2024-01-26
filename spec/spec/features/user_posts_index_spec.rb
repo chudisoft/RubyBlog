@@ -41,7 +41,16 @@ RSpec.describe 'User Post Index Page', type: :feature do
 
   it 'redirects to a post show page when a post is clicked' do
     post = user.posts.first
-    click_on post.title
+    # click_on post.title
+    find('a', text: post.title, match: :prefer_exact).click
     expect(current_path).to eq(user_post_path(user, post))
+  end
+
+  it 'shows pagination if there are more posts than fit on the view' do
+    # Assuming you have more than 10 posts (or whatever your per_page setting is)
+    visit user_posts_path(user)
+
+    expect(page).to have_selector('.pagination')
+    expect(page).to have_link('2') # Checking for a link to the second page
   end
 end

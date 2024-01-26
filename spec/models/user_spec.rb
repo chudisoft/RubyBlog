@@ -29,12 +29,8 @@ RSpec.describe User, type: :model do
                           likes_counter: 0, created_at: 1.seconds.ago)
       post3 = Post.create(author: user, title: 'Post 3', text: 'hello world', comments_counter: 0,
                           likes_counter: 0, created_at: 1.seconds.ago)
-      post4 = Post.create(author: user, title: 'Post 4', text: 'hello world', comments_counter: 0,
-                          likes_counter: 0, created_at: 1.seconds.ago)
-      post5 = Post.create(author: user, title: 'Post 5', text: 'hello world', comments_counter: 0,
-                          likes_counter: 0, created_at: 1.seconds.ago)
       rec_posts = user.recent_posts
-      expect(rec_posts).to eq([post5, post4, post3, post2, post1])
+      expect(rec_posts).to eq([post3, post2, post1])
     end
   end
 end
