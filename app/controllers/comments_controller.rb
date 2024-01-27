@@ -27,6 +27,17 @@ class CommentsController < ApplicationController
     end
   end
 
+  def destroy
+    @comment = Comment.find(params[:id])
+
+    # Authorization check
+    authorize! :destroy, @comment
+
+    @comment.destroy
+    redirect_back(fallback_location: user_post_path(@user, params[:post_id]),
+                  notice: 'Comment was successfully removed.')
+  end
+
   private
 
   def find_user
