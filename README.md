@@ -145,6 +145,11 @@ bundle exec rspec
 - Twitter: [@twitterhandle](https://twitter.com/chrisuduekwe)
 - LinkedIn: [LinkedIn](https://linkedin.com/in/christopher-uduekwe)
 
+👤 Muhammad Bilal Liaquat
+
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/shahzaman900/).
+- Github: [Github](https://github.com/bilalliaquat7).
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->

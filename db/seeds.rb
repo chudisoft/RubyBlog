@@ -8,27 +8,59 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 # Clear existing data
-User.destroy_all
-Post.destroy_all
-Comment.destroy_all
 Like.destroy_all
+Comment.destroy_all
+Post.destroy_all
+User.destroy_all
+
+# Create an admin user
+User.create(
+  name: 'Admin User',
+  photo: Faker::Avatar.image(slug: Faker::Lorem.unique.word, size: "200x200", format: "png", set: "set1"),
+  bio: Faker::Lorem.sentence,
+  email: 'admin@email.com',
+  password: '123456', # or any other default password
+  password_confirmation: '123456', # ensure this matches the password
+  confirmed_at: Time.now, # To bypass the confirmation email
+  posts_counter: 0,
+  role: 'admin'
+)
 
 # Create 5 random users
 5.times do
-  User.create(
+  user = User.new(
     name: Faker::Name.name,
-    photo: Faker::Avatar.image,
-    bio: Faker::Lorem.sentence
+    photo: Faker::Avatar.image(slug: Faker::Lorem.unique.word, size: "200x200", format: "png", set: "set1"),
+    bio: Faker::Lorem.sentence,
+    email: Faker::Internet.unique.email,
+    password: '123456', # or any other default password
+    password_confirmation: '123456', # ensure this matches the password
+    confirmed_at: Time.now, # To bypass the confirmation email
+    posts_counter: 0
   )
+
+  user.skip_confirmation! # Skip sending confirmation email
+  user.save!
 end
 
+Faker::Internet.unique.clear # Clear the Faker unique generator
+
+
+# Resetting the Faker unique generator after creating unique titles
+Faker::Lorem.unique.clear
+
 # Create 15 random posts with 10 random comments and 5 random likes for each post
-15.times do
+35.times do
   post = Post.create(
     author: User.all.sample,
     title: Faker::Lorem.sentence,
-    text: Faker::Lorem.paragraph
+    text: Faker::Lorem.paragraph,
+    comments_counter: 0,
+    likes_counter: 0
   )
+
+  # Resetting the Faker unique generator after creating unique items
+  Faker::Lorem.unique.clear
 
   10.times do
     Comment.create(
@@ -45,3 +77,7 @@ end
     )
   end
 end
+
+puts "Seed Completed"
+puts 'Added Users: ' + User.count
+puts 'Added Posts: ' + Post.count

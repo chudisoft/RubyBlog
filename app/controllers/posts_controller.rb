@@ -1,8 +1,14 @@
 class PostsController < ApplicationController
+  load_and_authorize_resource
+  before_action :authenticate_user!
+
   # Index action to list all posts
   def index
     @user = User.find(params[:user_id])
-    @posts = @user.posts
+    # Preloads the comments and likes for each post to avoid N+1 queries
+    @posts = @user.posts.includes(:comments,
+                                  :likes).order(created_at: :desc).paginate(page: params[:page],
+                                                                            per_page: 5)
   end
 
   # Show action to display a single post for a specific user
@@ -53,8 +59,12 @@ class PostsController < ApplicationController
   # Destroy action to delete a post
   def destroy
     @post = Post.find(params[:id])
+
+    # Authorization check
+    authorize! :destroy, @post
+
     @post.destroy
-    redirect_to posts_path, notice: 'Post was successfully deleted.'
+    redirect_to user_posts_path(params[:user_id]), notice: 'Post was successfully deleted.'
   end
 
   private

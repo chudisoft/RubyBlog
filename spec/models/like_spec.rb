@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Like, type: :model do
   before :all do
-    @author = User.create(name: 'Gale', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Poland.')
-    @user = User.create(name: 'Hanako', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Poland.')
+    @author = User.first
+    @user = User.last
     @post = Post.create(author: @author, title: 'Habits of me', text: 'Today....', comments_counter: 0,
                         likes_counter: 0)
   end

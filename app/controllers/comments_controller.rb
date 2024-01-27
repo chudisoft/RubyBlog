@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  load_and_authorize_resource
+  before_action :authenticate_user!
   before_action :find_user
 
   def new
@@ -23,6 +25,17 @@ class CommentsController < ApplicationController
       puts "Comment not saved. Errors: #{comment.errors.full_messages}" # Add this line for debugging
       render 'new'
     end
+  end
+
+  def destroy
+    @comment = Comment.find(params[:id])
+
+    # Authorization check
+    authorize! :destroy, @comment
+
+    @comment.destroy
+    redirect_back(fallback_location: user_post_path(@user, params[:post_id]),
+                  notice: 'Comment was successfully removed.')
   end
 
   private
