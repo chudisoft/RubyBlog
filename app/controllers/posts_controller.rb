@@ -8,16 +8,19 @@ class PostsController < ApplicationController
                                   :likes).order(created_at: :desc).paginate(page: params[:page],
                                                                             per_page: 5)
   end
+
   # Show action to display a single post for a specific user
   def show
     @user = User.find(params[:user_id])
     @post = @user.posts.find(params[:id])
   end
+
   # New action to display the post creation form
   def new
     @user = User.find(params[:user_id])
     @post = Post.new
   end
+
   # Create action to handle post creation
   def create
     @post = Post.new(post_params)
@@ -34,10 +37,12 @@ class PostsController < ApplicationController
       render 'new'
     end
   end
+
   # Edit action to display the post edit form
   def edit
     @post = Post.find(params[:id])
   end
+
   # Update action to handle post updates
   def update
     @post = Post.find(params[:id])
@@ -47,13 +52,16 @@ class PostsController < ApplicationController
       render 'edit'
     end
   end
+
   # Destroy action to delete a post
   def destroy
     @post = Post.find(params[:id])
     @post.destroy
     redirect_to posts_path, notice: 'Post was successfully deleted.'
   end
+
   private
+
   def post_params
     params.require(:post).permit(:title, :text)
   end
