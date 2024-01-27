@@ -34,7 +34,10 @@
                         </label>
                         <label>
                             <% if can?(:destroy, post) %>
-                                <%= link_to 'Delete', post_path(post), method: :delete, data: { confirm: 'Are you sure?' } %>
+                                <%= button_to 'Delete', user_post_path(post.author, post),
+                                    method: :delete,
+                                    data: {turbo_method: :create},
+                                    class: 'btn btn-danger btn-sm' %>
                             <% end %>
                         </label>
 

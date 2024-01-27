@@ -6,7 +6,7 @@ gem 'devise'
 
 gem 'will_paginate', '~> 3.1'
 
-gem 'cancancan', '~> 3.2'
+gem 'cancancan'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.1.1'
