@@ -9,11 +9,10 @@ module Api
     end
 
     def create
-      user = User.find(params[:user_id])
       post = Post.find(params[:post_id])
       comment = Comment.new(comment_params)
-      comment.post_id = params[:post_id]
-      comment.user = user
+      comment.post_id = post.id
+      comment.user_id = post.author_id
 
       if comment.save
         render json: comment, status: :created
