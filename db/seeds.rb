@@ -79,5 +79,5 @@ Faker::Lorem.unique.clear
 end
 
 puts "Seed Completed"
-puts 'Added Users: ' + User.count
-puts 'Added Posts: ' + Post.count
+puts "Added Users: #{User.count}"
+puts "Added Posts: #{Post.count}"
