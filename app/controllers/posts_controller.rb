@@ -56,12 +56,7 @@ class PostsController < ApplicationController
     end
   end
 
-  private
-
-  def post_params
-    params.require(:post).permit(:title, :text)
-  end
-# Destroy action to delete a post
+  # Destroy action to delete a post
   def destroy
     @post = Post.find(params[:id])
 
@@ -70,5 +65,11 @@ class PostsController < ApplicationController
 
     @post.destroy
     redirect_to user_posts_path(params[:user_id]), notice: 'Post was successfully deleted.'
+  end
+
+  private
+
+  def post_params
+    params.require(:post).permit(:title, :text)
   end
 end
