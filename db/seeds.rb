@@ -22,7 +22,8 @@ User.destroy_all
     email: Faker::Internet.unique.email,
     password: '123456', # or any other default password
     password_confirmation: '123456', # ensure this matches the password
-    confirmed_at: Time.now  # To bypass the confirmation email
+    confirmed_at: Time.now, # To bypass the confirmation email
+    posts_counter: 0
   )
 
   user.skip_confirmation! # Skip sending confirmation email
@@ -36,11 +37,13 @@ Faker::Internet.unique.clear # Clear the Faker unique generator
 Faker::Lorem.unique.clear
 
 # Create 15 random posts with 10 random comments and 5 random likes for each post
-15.times do
+35.times do
   post = Post.create(
     author: User.all.sample,
     title: Faker::Lorem.sentence,
-    text: Faker::Lorem.paragraph
+    text: Faker::Lorem.paragraph,
+    comments_counter: 0,
+    likes_counter: 0
   )
 
   # Resetting the Faker unique generator after creating unique items
@@ -61,3 +64,7 @@ Faker::Lorem.unique.clear
     )
   end
 end
+
+puts "Seed Completed"
+puts 'Added Users: ' + User.count
+puts 'Added Posts: ' + Post.count

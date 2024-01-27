@@ -15,7 +15,7 @@ RSpec.describe 'Post Show Page', type: :feature do
     # Simulate user login if necessary
     visit new_user_session_path
     fill_in 'Email', with: userTest.email
-    fill_in 'Password', with: 'password'
+    fill_in 'Password', with: '123456'
     click_on 'Log in'
 
     visit user_post_path(user, post)

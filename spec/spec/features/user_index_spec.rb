@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'User Index Page', type: :feature do
   before(:each) do
     @user = User.last
-    @post = Post.create!(title: 'Test Post', text: 'This is a test post', author: @user)
+    @post = Post.create!(title: 'Test Post', text: 'This is a test post', author: @user, comments_counter: 0)
     # Create some comments and likes for the post if necessary
   end
 
@@ -14,7 +14,7 @@ RSpec.describe 'User Index Page', type: :feature do
     # Simulate user login if necessary
     visit new_user_session_path
     fill_in 'Email', with: userTest.email
-    fill_in 'Password', with: 'password'
+    fill_in 'Password', with: '123456'
     click_on 'Log in'
 
     visit users_path
