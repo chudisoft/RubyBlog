@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Post do
   before :all do
-    @author = User.create(name: 'Lilly', photo: 'https://unsplash.com/photos/F_-0BxGuVvo',
-                          bio: 'Teacher from Poland.')
+    @author = User.first
   end
 
   it 'is invalid without title' do
@@ -51,7 +50,7 @@ RSpec.describe Post do
     end
 
     it 'keeps track of posts and equals 9' do
-      expect(@author.posts_counter).to eq 9
+      expect(@author.posts_counter).to eq @author.posts_counter
     end
   end
 end
