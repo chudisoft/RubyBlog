@@ -32,6 +32,12 @@
                         <label>
                             Likes: <span><%= post.likes_counter %></span>
                         </label>
+                        <label>
+                            <% if can?(:destroy, post) %>
+                                <%= link_to 'Delete', post_path(post), method: :delete, data: { confirm: 'Are you sure?' } %>
+                            <% end %>
+                        </label>
+
                     </div>
                 </div>
                 <div class='col-md-12 card mt-2'>
@@ -44,4 +50,9 @@
             </li>
         <% end %>
     </ul>
+    <div class='d-flex justify-content-center'>
+        <div class='col-md-4 text-center'>
+            <%= will_paginate @posts, class: 'pagination' %>
+        </div>
+    </div>
 </div>

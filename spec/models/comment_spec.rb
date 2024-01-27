@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
   before :all do
-    @author = User.create(name: 'Ryuu', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Poland.')
-    @user = User.create(name: 'Billy', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Poland.')
+    @author = User.first
+    @user = User.last
     @post = Post.create(author: @author, title: 'Harru', text: 'Hello Haru....', comments_counter: 0,
                         likes_counter: 0)
   end

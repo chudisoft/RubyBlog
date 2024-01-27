@@ -13,3 +13,13 @@
  *= require_tree .
  *= require_self
  */
+/* 
+ * = link_tree ../images
+ * = link_directory ../javascripts .js
+ * = link_directory ../stylesheets .css
+ * ...
+ */
+
+.form-group {
+  margin-bottom: 0.5em;
+}

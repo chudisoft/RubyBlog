@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  load_and_authorize_resource
+  before_action :authenticate_user!
+
   # Index action to list all users
   def index
     @users = User.all
