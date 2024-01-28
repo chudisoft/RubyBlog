@@ -44,5 +44,9 @@
             </li>
         <% end %>
     </ul>
-    <%= will_paginate @posts, class: 'pagination' %>
+    <div class='d-flex justify-content-center'>
+        <div class='col-md-4 text-center'>
+            <%= will_paginate @posts, class: 'pagination' %>
+        </div>
+    </div>
 </div>

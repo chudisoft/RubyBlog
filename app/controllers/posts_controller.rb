@@ -1,10 +1,13 @@
 class PostsController < ApplicationController
+  before_action :authenticate_user!
+
   # Index action to list all posts
   def index
     @user = User.find(params[:user_id])
     # Preloads the comments and likes for each post to avoid N+1 queries
-    @posts = @user.posts.includes(:comments, :likes).order(created_at: :desc).paginate(page: params[:page],
-                                                                                       per_page: 10)
+    @posts = @user.posts.includes(:comments,
+                                  :likes).order(created_at: :desc).paginate(page: params[:page],
+                                                                            per_page: 5)
   end
 
   # Show action to display a single post for a specific user

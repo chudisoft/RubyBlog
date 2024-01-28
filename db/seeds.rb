@@ -8,31 +8,46 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 # Clear existing data
-User.destroy_all
-Post.destroy_all
-Comment.destroy_all
 Like.destroy_all
+Comment.destroy_all
+Post.destroy_all
+User.destroy_all
 
-# Create 5 unique users
-5.times do |i|
-  User.create(
-    name: Faker::Name.unique.name,   # Ensures that the generated name is unique
-    photo: "https://robohash.org/#{i}?size=200x200", # Uses a URL with a unique parameter
-    bio: Faker::Lorem.sentence
+# Create 5 random users
+5.times do
+  user = User.new(
+    name: Faker::Name.name,
+    photo: Faker::Avatar.image(slug: Faker::Lorem.unique.word, size: "200x200", format: "png", set: "set1"),
+    bio: Faker::Lorem.sentence,
+    email: Faker::Internet.unique.email,
+    password: '123456', # or any other default password
+    password_confirmation: '123456', # ensure this matches the password
+    confirmed_at: Time.now, # To bypass the confirmation email
+    posts_counter: 0
   )
+
+  user.skip_confirmation! # Skip sending confirmation email
+  user.save!
 end
 
-# Resetting the Faker unique generator after creating unique names
-Faker::Name.unique.clear
+Faker::Internet.unique.clear # Clear the Faker unique generator
 
-# Create unique posts, comments, and likes
-User.all.each do |user|
-  # Create a certain number of posts for each user
-  3.times do
-    post = user.posts.create(
-      title: Faker::Lorem.unique.sentence, # Ensures unique titles for posts
-      text: Faker::Lorem.paragraph
-    )
+
+# Resetting the Faker unique generator after creating unique titles
+Faker::Lorem.unique.clear
+
+# Create 15 random posts with 10 random comments and 5 random likes for each post
+35.times do
+  post = Post.create(
+    author: User.all.sample,
+    title: Faker::Lorem.sentence,
+    text: Faker::Lorem.paragraph,
+    comments_counter: 0,
+    likes_counter: 0
+  )
+
+  # Resetting the Faker unique generator after creating unique items
+  Faker::Lorem.unique.clear
 
     # Resetting the Faker unique generator after creating unique titles
     Faker::Lorem.unique.clear
@@ -51,3 +66,7 @@ User.all.each do |user|
     end
   end
 end
+
+puts "Seed Completed"
+puts 'Added Users: ' + User.count
+puts 'Added Posts: ' + Post.count
