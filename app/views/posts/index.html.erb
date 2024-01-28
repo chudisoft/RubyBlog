@@ -32,6 +32,15 @@
                         <label>
                             Likes: <span><%= post.likes_counter %></span>
                         </label>
+                        <label>
+                            <% if can?(:destroy, post) %>
+                                <%= button_to 'Delete', user_post_path(post.author, post),
+                                    method: :delete,
+                                    data: {turbo_method: :create},
+                                    class: 'btn btn-danger btn-sm' %>
+                            <% end %>
+                        </label>
+
                     </div>
                 </div>
                 <div class='col-md-12 card mt-2'>
