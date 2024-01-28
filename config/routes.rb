@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  namespace :api do
+    resources :users, only: [] do
+      resources :posts, only: [:index] do
+        resources :comments, only: [:index, :create]
+      end
+    end
+  end
+
+
   devise_for :users
   resources :users
   get '/', to: 'users#index', as: 'home'

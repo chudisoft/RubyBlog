@@ -9,10 +9,6 @@ class PostsController < ApplicationController
     @posts = @user.posts.includes(:comments,
                                   :likes).order(created_at: :desc).paginate(page: params[:page],
                                                                             per_page: 5)
-    # Preloads the comments and likes for each post to avoid N+1 queries
-    @posts = @user.posts.includes(:comments,
-                                  :likes).order(created_at: :desc).paginate(page: params[:page],
-                                                                            per_page: 5)
   end
 
   # Show action to display a single post for a specific user
@@ -37,6 +33,7 @@ class PostsController < ApplicationController
       @user = User.find(params[:user_id])
       redirect_to user_post_path(@user, @post), notice: 'Post was successfully created.'
     else
+
       pp @post.errors
       pp @post.errors.full_messages
       @user = User.find(params[:user_id])
