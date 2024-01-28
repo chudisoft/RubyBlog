@@ -5,9 +5,6 @@ Rails.application.routes.draw do
         resources :comments, only: [:index, :create]
       end
     end
-    resources :posts, only: [:index] do
-      resources :comments, only: [:index, :create]
-    end
   end
 
 
@@ -15,8 +12,6 @@ Rails.application.routes.draw do
   resources :users
   get '/', to: 'users#index', as: 'home'
   resources :users, only: [:index, :show] do
-    resources :posts, only: [:index, :show, :new, :create, :destroy] do
-      resources :comments, only: [:new, :create, :destroy]
     resources :posts, only: [:index, :show, :new, :create, :destroy] do
       resources :comments, only: [:new, :create, :destroy]
       resources :likes, only: [:create]
