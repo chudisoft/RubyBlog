@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   # Show action to display a single user's profile
   def show
     @user = User.find(params[:id])
+    @posts = @user.posts.includes(:comments, :likes).order(created_at: :desc)
   end
 
   # New action to display the user creation form
