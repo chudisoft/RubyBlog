@@ -13,35 +13,41 @@ Post.destroy_all
 Comment.destroy_all
 Like.destroy_all
 
-# Create 5 random users
-5.times do
+# Create 5 unique users
+5.times do |i|
   User.create(
-    name: Faker::Name.name,
-    photo: Faker::Avatar.image,
+    name: Faker::Name.unique.name,   # Ensures that the generated name is unique
+    photo: "https://robohash.org/#{i}?size=200x200", # Uses a URL with a unique parameter
     bio: Faker::Lorem.sentence
   )
 end
 
-# Create 15 random posts with 10 random comments and 5 random likes for each post
-15.times do
-  post = Post.create(
-    author: User.all.sample,
-    title: Faker::Lorem.sentence,
-    text: Faker::Lorem.paragraph
-  )
+# Resetting the Faker unique generator after creating unique names
+Faker::Name.unique.clear
 
-  10.times do
-    Comment.create(
-      user: User.all.sample,
-      post: post,
-      text: Faker::Lorem.sentence
+# Create unique posts, comments, and likes
+User.all.each do |user|
+  # Create a certain number of posts for each user
+  3.times do
+    post = user.posts.create(
+      title: Faker::Lorem.unique.sentence, # Ensures unique titles for posts
+      text: Faker::Lorem.paragraph
     )
-  end
 
-  5.times do
-    Like.create(
-      user: User.all.sample,
-      post: post
-    )
+    # Resetting the Faker unique generator after creating unique titles
+    Faker::Lorem.unique.clear
+
+    # Add unique comments to each post
+    10.times do
+      post.comments.create(
+        user: User.all.sample,  # Randomly selects a user to be the commenter
+        text: Faker::Lorem.sentence
+      )
+    end
+
+    # Add likes to each post
+    User.all.sample(5).each do |liker| # Randomly selects 5 unique users to like the post
+      post.likes.create(user: liker)
+    end
   end
 end

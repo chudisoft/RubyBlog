@@ -145,6 +145,12 @@ bundle exec rspec
 - Twitter: [@twitterhandle](https://twitter.com/chrisuduekwe)
 - LinkedIn: [LinkedIn](https://linkedin.com/in/christopher-uduekwe)
 
+👤 **Essohanam TAMBANA**
+
+- GitHub: [@GhostEsso](https://github.com/GhostEsso)
+- Twitter: [@TambanaEssohana](https://twitter.com/TambanaEssohana)
+- LinkedIn: [Tambana Essohanam](https://www.linkedin.com/in/essohanam-tambana)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
