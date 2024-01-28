@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
-
+  
   # Index action to list all posts
   def index
     @user = User.find(params[:user_id])
@@ -32,7 +32,6 @@ class PostsController < ApplicationController
       @user = User.find(params[:user_id])
       redirect_to user_post_path(@user, @post), notice: 'Post was successfully created.'
     else
-
       pp @post.errors
       pp @post.errors.full_messages
       @user = User.find(params[:user_id])
