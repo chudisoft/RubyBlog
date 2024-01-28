@@ -48,7 +48,6 @@ Faker::Lorem.unique.clear
 
   # Resetting the Faker unique generator after creating unique items
   Faker::Lorem.unique.clear
-
   10.times do
     Comment.create(
       user: User.all.sample,
@@ -56,12 +55,9 @@ Faker::Lorem.unique.clear
       text: Faker::Lorem.sentence
     )
   end
-
-  5.times do
-    Like.create(
-      user: User.all.sample,
-      post: post
-    )
+  # Add likes to each post
+  User.all.sample(5).each do |liker| # Randomly selects 5 unique users to like the post
+    post.likes.create(user: liker)
   end
 end
 

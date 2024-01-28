@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
+  
   # Index action to list all posts
   def index
     @user = User.find(params[:user_id])
